@@ -1,13 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Search, User, ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "@/store/cart";
 import SearchOverlay from "./SearchOverlay";
-import { officialImage } from "@/lib/catalog";
+import Wordmark from "@/components/Wordmark";
 
 const NAV = [
   { label: "New", href: "/shop/new-arrivals", segment: "new-arrivals" },
@@ -69,17 +68,10 @@ export default function Header() {
             </div>
 
             <Link href="/" className="flex flex-col items-center justify-center" aria-label="INKOTANYISINCE90 home">
-              <Image
-                src={officialImage("logo-original.png")}
-                alt="INKOTANYISINCE90"
-                width={76}
-                height={48}
-                priority
-                className="h-11 w-auto object-contain sm:h-[52px]"
+              <Wordmark
+                className="[&>span:first-child]:text-lg sm:[&>span:first-child]:text-xl"
+                sub="Premium streetwear since 1990"
               />
-              <span className="mt-1 hidden text-[7px] font-medium uppercase tracking-[0.34em] text-neutral-400 sm:block">
-                INKOTANYISINCE90
-              </span>
             </Link>
 
             <div className="flex items-center justify-end">
@@ -145,13 +137,9 @@ export default function Header() {
           <div className="animate-fade absolute inset-0 bg-black/25" onClick={() => setMobile(false)} />
           <div className="absolute inset-y-0 left-0 flex w-[86%] max-w-sm flex-col bg-white text-neutral-900 shadow-xl">
             <div className="flex h-[76px] items-center justify-between px-5">
-              <Image
-                src={officialImage("logo-original.png")}
-                alt="INKOTANYISINCE90"
-                width={56}
-                height={40}
-                className="h-10 w-auto object-contain"
-              />
+              <Link href="/" aria-label="INKOTANYISINCE90 home" onClick={() => setMobile(false)}>
+                <Wordmark className="[&>span:first-child]:text-base" />
+              </Link>
               <button onClick={() => setMobile(false)} aria-label="Close menu" className="p-2">
                 <X size={22} strokeWidth={1.5} />
               </button>

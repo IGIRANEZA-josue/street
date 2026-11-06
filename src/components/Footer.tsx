@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Check } from "lucide-react";
+import { officialImage } from "@/lib/catalog";
 
 export function NewsletterForm({ source = "footer" }: { dark?: boolean; source?: string }) {
   const [email, setEmail] = useState("");
@@ -131,7 +132,7 @@ export default function Footer() {
           <div className="lg:col-span-5">
             <Link href="/" className="inline-flex flex-col items-start" aria-label="INKOTANYISINCE90 home">
               <Image
-                src="/images/logo-original.png"
+                src={officialImage("logo-original.png")}
                 alt="INKOTANYISINCE90"
                 width={76}
                 height={52}

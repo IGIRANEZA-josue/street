@@ -45,7 +45,14 @@ type RawProduct = {
 const SIZES = ["S", "M", "L", "XL", "2XL", "3XL"];
 const AS_SHOWN = [{ name: "As shown", garment: "#ffffff", ink: "#111111" }];
 const ARCHIVE_CODES = new Set(["IS90-004", "IS90-005", "IS90-014", "IS90-016", "IS90-017", "IS90-019", "IS90-020", "IS90-021"]);
-const img = (file: string) => `/images/products/${file}`;
+/**
+ * Official imagery is served by the live brand site (a Next.js app that hosts
+ * its files under /images/...). We hotlink those files so the redesign shows
+ * the real product photography without shipping binary assets in this repo.
+ */
+export const OFFICIAL_SITE_URL = "https://www.inkotanyisince90.com";
+export const officialImage = (file: string) => `${OFFICIAL_SITE_URL}/images/${file}`;
+const img = (file: string) => officialImage(file);
 
 /**
  * Exact catalogue data and official imagery from inkotanyisince90.com.

@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Check } from "lucide-react";
-import { officialImage } from "@/lib/catalog";
+import Wordmark from "@/components/Wordmark";
 
 export function NewsletterForm({ source = "footer" }: { dark?: boolean; source?: string }) {
   const [email, setEmail] = useState("");
@@ -131,14 +130,7 @@ export default function Footer() {
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Link href="/" className="inline-flex flex-col items-start" aria-label="INKOTANYISINCE90 home">
-              <Image
-                src={officialImage("logo-original.png")}
-                alt="INKOTANYISINCE90"
-                width={76}
-                height={52}
-                className="h-12 w-auto object-contain"
-              />
-              <span className="mt-3 text-[10px] font-semibold uppercase tracking-[0.3em]">INKOTANYISINCE90</span>
+              <Wordmark className="[&>span:first-child]:text-xl" />
             </Link>
 
             <p className="mt-5 max-w-sm text-sm font-light leading-7 text-neutral-500">

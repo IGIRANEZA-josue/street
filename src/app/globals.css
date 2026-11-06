@@ -24,6 +24,8 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Guard against accidental horizontal scroll on small screens. */
+  overflow-x: clip;
 }
 
 .font-display,

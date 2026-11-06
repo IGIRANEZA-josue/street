@@ -1,3 +1,4 @@
+
 {
   "name": "next",
   "version": "1.0.0",
@@ -9,7 +10,6 @@
   },
   "license": "ISC",
   "author": "josue",
-  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",

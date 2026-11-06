@@ -69,7 +69,7 @@ export default function Header() {
 
             <Link href="/" className="flex flex-col items-center justify-center" aria-label="INKOTANYISINCE90 home">
               <Wordmark
-                className="[&>span:first-child]:text-lg sm:[&>span:first-child]:text-xl"
+                className="[&>span:first-child]:text-[13px] sm:[&>span:first-child]:text-xl [&>span:last-child]:hidden sm:[&>span:last-child]:block"
                 sub="Premium streetwear since 1990"
               />
             </Link>

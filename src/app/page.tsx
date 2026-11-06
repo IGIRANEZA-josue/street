@@ -100,7 +100,7 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-3 gap-x-3 gap-y-10 md:grid-cols-4 xl:grid-cols-6">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-10 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
           {latestProducts.map((product, index) => (
             <ProductCard key={product.slug} product={product} priority={index < 6} />
           ))}

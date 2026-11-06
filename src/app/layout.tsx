@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             Skip to content
           </a>
           <Header />
-          <main id="main">{children}</main>
+          <main id="main" className="pt-[76px] sm:pt-[88px]">{children}</main>
           <Footer />
           <CartDrawer />
           <QuickAddModal />

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { getProducts } from "@/lib/server-products";
 import ProductCard from "@/components/ProductCard";
 import { NewsletterForm } from "@/components/Footer";
+import { officialImage } from "@/lib/catalog";
 
 export const dynamic = "force-dynamic";
 export const metadata = {
@@ -30,9 +31,9 @@ export default async function StoryPage() {
 
       <section className="mx-auto grid max-w-[1300px] gap-5 px-4 pb-20 sm:grid-cols-3 sm:px-8 lg:px-12">
         {[
-          { src: "/images/products/ink.front-removebg-preview.model.png", label: "IS90-001 — INKOTANYI SCRIPT" },
-          { src: "/images/products/urugwiro.front-removebg-preview.model.png", label: "IS90-005 — URUGWIRO" },
-          { src: "/images/products/ink.women.front-removebg-preview.model.png", label: "IS90-003 — INKOTANYI WOMEN" },
+          { src: officialImage("ink.front-removebg-preview.model.png"), label: "IS90-001 — INKOTANYI SCRIPT" },
+          { src: officialImage("urugwiro.front-removebg-preview.model.png"), label: "IS90-005 — URUGWIRO" },
+          { src: officialImage("ink.women.front-removebg-preview.model.png"), label: "IS90-003 — INKOTANYI WOMEN" },
         ].map((item) => (
           <figure key={item.label} className="text-center">
             <div className="relative aspect-square overflow-hidden bg-white">

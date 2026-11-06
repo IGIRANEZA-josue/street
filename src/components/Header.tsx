@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { Search, User, ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "@/store/cart";
 import SearchOverlay from "./SearchOverlay";
+import { officialImage } from "@/lib/catalog";
 
 const NAV = [
   { label: "New", href: "/shop/new-arrivals", segment: "new-arrivals" },
@@ -69,7 +70,7 @@ export default function Header() {
 
             <Link href="/" className="flex flex-col items-center justify-center" aria-label="INKOTANYISINCE90 home">
               <Image
-                src="/images/logo-original.png"
+                src={officialImage("logo-original.png")}
                 alt="INKOTANYISINCE90"
                 width={76}
                 height={48}
@@ -145,7 +146,7 @@ export default function Header() {
           <div className="absolute inset-y-0 left-0 flex w-[86%] max-w-sm flex-col bg-white text-neutral-900 shadow-xl">
             <div className="flex h-[76px] items-center justify-between px-5">
               <Image
-                src="/images/logo-original.png"
+                src={officialImage("logo-original.png")}
                 alt="INKOTANYISINCE90"
                 width={56}
                 height={40}

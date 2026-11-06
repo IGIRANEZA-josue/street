@@ -61,8 +61,14 @@ export async function getProducts(): Promise<Product[]> {
         colors: (r.colors as Product["colors"]) ?? [],
         sizes: (r.sizes as string[]) ?? [],
         badge: r.badge ?? undefined,
-        image: r.image || base?.image || "",
-        images: (r.images as string[])?.length ? (r.images as string[]) : base?.images || [],
+        // Imagery is hotlinked from the official site; ignore stale local paths in the DB.
+        image: r.image?.startsWith("/images/") ? base?.image || r.image : r.image || base?.image || "",
+        images:
+          (r.images as string[])?.length && !(r.images as string[])[0]?.startsWith("/images/")
+            ? (r.images as string[])
+            : base?.images?.length
+              ? base.images
+              : (r.images as string[]) ?? [],
         printStyle: r.printStyle as Product["printStyle"],
         printLines: (r.printLines as string[]) ?? [],
         stock: r.stock,

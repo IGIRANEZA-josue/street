@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import QuickAddModal from "@/components/QuickAddModal";
 import { CartProvider } from "@/store/cart";
+import { officialImage } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   title: "INKOTANYISINCE90 | Premium Streetwear",
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "INKOTANYISINCE90 | Premium Streetwear",
     description: "Minimalist luxury fashion from Rwanda. Premium streetwear since 1990.",
-    images: ["/images/products/ink.front-removebg-preview.model.png"],
+    images: [officialImage("ink.front-removebg-preview.model.png")],
     type: "website",
   },
 };

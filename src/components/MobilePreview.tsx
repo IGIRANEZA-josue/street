@@ -443,10 +443,12 @@ export default function MobilePreview() {
 
             <div
               ref={stageRef}
-              className="relative flex h-[62vh] min-h-[440px] items-center justify-center overflow-auto border border-neutral-200 bg-[radial-gradient(circle_at_50%_0%,#ffffff_0%,#f4f4f1_55%,#e9e9e4_100%)] p-5 sm:h-[68vh] sm:min-h-[520px] lg:h-[calc(100dvh-var(--header-h)-19rem)]"
+              className="relative flex h-[62vh] min-h-[440px] overflow-auto border border-neutral-200 bg-[radial-gradient(circle_at_50%_0%,#ffffff_0%,#f4f4f1_55%,#e9e9e4_100%)] p-5 sm:h-[68vh] sm:min-h-[520px] lg:h-[calc(100dvh-var(--header-h)-19rem)]"
             >
+              {/* margin:auto (not flex centering) so a 100% zoom view stays
+                  scrollable to every edge instead of clipping the left side. */}
               <div
-                className="relative shrink-0"
+                className="relative m-auto shrink-0"
                 style={{ width: frameWidth * scale, height: frameHeight * scale }}
               >
                 <div

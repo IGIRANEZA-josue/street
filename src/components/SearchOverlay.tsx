@@ -13,10 +13,14 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    inputRef.current?.focus();
+    inputRef.current?.focus({ preventScroll: true });
+    document.body.classList.add("is-locked");
     const fn = (event: KeyboardEvent) => event.key === "Escape" && onClose();
     window.addEventListener("keydown", fn);
-    return () => window.removeEventListener("keydown", fn);
+    return () => {
+      document.body.classList.remove("is-locked");
+      window.removeEventListener("keydown", fn);
+    };
   }, [onClose]);
 
   const results = query.trim()
@@ -24,23 +28,23 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
     : PRODUCTS.filter((p) => p.featured).slice(0, 4);
 
   return (
-    <div className="fixed inset-0 z-[80] overflow-y-auto bg-white text-neutral-900">
-      <div className="mx-auto max-w-5xl px-5 pb-20 pt-6 sm:pt-10">
-        <div className="flex items-center justify-between">
+    <div className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-white text-neutral-900">
+      <div className="mx-auto max-w-5xl px-4 pb-20 pt-[max(1rem,env(safe-area-inset-top))] sm:px-5 sm:pt-10">
+        <div className="flex items-center justify-between gap-3">
           <span className="text-[9px] font-medium uppercase tracking-[0.3em] text-neutral-400">Search INKOTANYISINCE90</span>
-          <button onClick={onClose} className="p-2 transition hover:text-neutral-400" aria-label="Close search">
-            <X size={26} strokeWidth={1.25} />
+          <button onClick={onClose} className="-mr-2 grid h-11 w-11 shrink-0 place-items-center transition hover:text-neutral-400" aria-label="Close search">
+            <X size={24} strokeWidth={1.25} />
           </button>
         </div>
 
-        <div className="mt-10 flex items-center gap-4 border-b border-neutral-300 pb-4 focus-within:border-black">
-          <Search size={26} strokeWidth={1.25} className="shrink-0 text-neutral-400" />
+        <div className="mt-6 flex items-center gap-3 border-b border-neutral-300 pb-3 focus-within:border-black sm:mt-10 sm:gap-4 sm:pb-4">
+          <Search size={22} strokeWidth={1.25} className="shrink-0 text-neutral-400 sm:h-[26px] sm:w-[26px]" />
           <input
             ref={inputRef}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search products or IS90 codes"
-            className="w-full bg-transparent text-2xl font-light uppercase tracking-[0.04em] placeholder:text-neutral-300 focus:outline-none sm:text-4xl"
+            className="w-full min-w-0 bg-transparent text-xl font-light uppercase tracking-[0.04em] placeholder:text-neutral-300 focus:outline-none sm:text-4xl"
           />
         </div>
 
@@ -48,7 +52,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
           <div className="mt-7 flex flex-wrap items-center gap-2">
             <span className="mr-2 text-[9px] uppercase tracking-[0.24em] text-neutral-400">Suggested</span>
             {SUGGESTIONS.map((term) => (
-              <button key={term} onClick={() => setQuery(term)} className="border border-neutral-200 px-3.5 py-2 text-[10px] uppercase tracking-[0.16em] transition hover:border-black">
+              <button key={term} onClick={() => setQuery(term)} className="min-h-[40px] border border-neutral-200 px-3.5 py-2 text-[10px] uppercase tracking-[0.16em] transition hover:border-black">
                 {term}
               </button>
             ))}
@@ -59,7 +63,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
           {query ? `${results.length} result${results.length === 1 ? "" : "s"} for “${query}”` : "Featured products"}
         </p>
 
-        <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-9 lg:grid-cols-4">
+        <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-9 sm:grid-cols-3 lg:grid-cols-4">
           {results.map((product) => (
             <Link key={product.slug} href={`/product/${product.slug}`} onClick={onClose} className="group text-center">
               <div className="aspect-square bg-white">
@@ -79,7 +83,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
           </div>
         )}
 
-        <Link href="/shop" onClick={onClose} className="mt-12 inline-flex items-center gap-2 bg-black px-6 py-3 text-[10px] font-medium uppercase tracking-[0.22em] text-white transition hover:bg-neutral-800">
+        <Link href="/shop" onClick={onClose} className="mt-12 inline-flex min-h-[48px] items-center gap-2 bg-black px-6 text-[10px] font-medium uppercase tracking-[0.22em] text-white transition hover:bg-neutral-800">
           View catalogue <ArrowRight size={14} />
         </Link>
       </div>

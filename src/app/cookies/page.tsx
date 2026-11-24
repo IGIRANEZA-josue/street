@@ -26,17 +26,17 @@ export default function CookiesPage() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl bg-white px-4 py-16 sm:px-6 sm:py-20">
+    <div className="mx-auto max-w-3xl bg-white px-4 py-12 sm:px-6 sm:py-20">
       <p className="text-[9px] font-light uppercase tracking-[0.32em] text-neutral-400">Privacy</p>
-      <h1 className="mt-4 text-4xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-5xl">Manage Cookie Preferences</h1>
+      <h1 className="mt-4 break-words text-3xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-5xl">Manage Cookie Preferences</h1>
 
-      <div className="mt-10 space-y-8 text-[15px] font-light leading-8 text-neutral-600">
+      <div className="mt-8 space-y-8 text-[15px] font-light leading-8 text-neutral-600 sm:mt-10">
         <section>
           <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-neutral-900">Your Privacy Choices</h2>
           <p>In this panel you can express some preferences related to the processing of your personal information. You may review and change the expressed choices at any time by resurfacing this panel through the privacy settings link available on the website.</p>
         </section>
-        <section className="border border-neutral-200 p-6">
-          <div className="flex items-start justify-between gap-6">
+        <section className="border border-neutral-200 p-5 sm:p-6">
+          <div className="flex flex-wrap items-start justify-between gap-3 sm:gap-6">
             <div>
               <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-900">Strictly Necessary</h2>
               <p className="mt-2">Required for checkout, cart, security and core website operation.</p>
@@ -44,7 +44,7 @@ export default function CookiesPage() {
             <span className="shrink-0 bg-black px-3 py-1.5 text-[9px] font-medium uppercase tracking-[0.16em] text-white">Always on</span>
           </div>
         </section>
-        <section className="border border-neutral-200 p-6">
+        <section className="border border-neutral-200 p-5 sm:p-6">
           <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-900">Targeted Analytics</h2>
           <p className="mt-2">Helps us understand website usage and improve the shopping experience. Your current choice is <strong className="font-medium text-neutral-900">{choice ? choice : "not set"}</strong>.</p>
         </section>
@@ -55,9 +55,9 @@ export default function CookiesPage() {
       </div>
 
       <div className="mt-10 flex flex-wrap gap-3">
-        <button onClick={() => save("all")} className="bg-black px-6 py-3.5 text-[10px] font-medium uppercase tracking-[0.2em] text-white transition hover:bg-neutral-800">Accept All</button>
-        <button onClick={() => save("necessary")} className="border border-black px-6 py-3.5 text-[10px] font-medium uppercase tracking-[0.2em] transition hover:bg-black hover:text-white">Reject All</button>
-        <button onClick={() => save("current")} className="border border-neutral-300 px-6 py-3.5 text-[10px] font-medium uppercase tracking-[0.2em] transition hover:border-black">Accept Current</button>
+        <button onClick={() => save("all")} className="min-h-[48px] bg-black px-6 py-3.5 text-[10px] font-medium uppercase tracking-[0.2em] text-white transition hover:bg-neutral-800">Accept All</button>
+        <button onClick={() => save("necessary")} className="min-h-[48px] border border-black px-6 py-3.5 text-[10px] font-medium uppercase tracking-[0.2em] transition hover:bg-black hover:text-white">Reject All</button>
+        <button onClick={() => save("current")} className="min-h-[48px] border border-neutral-300 px-6 py-3.5 text-[10px] font-medium uppercase tracking-[0.2em] transition hover:border-black">Accept Current</button>
       </div>
       {saved && <p className="mt-4 text-sm text-neutral-500" role="status">Preferences saved.</p>}
     </div>

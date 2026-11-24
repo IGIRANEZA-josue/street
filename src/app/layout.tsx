@@ -8,6 +8,14 @@ import QuickAddModal from "@/components/QuickAddModal";
 import { CartProvider } from "@/store/cart";
 import { officialImage } from "@/lib/catalog";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#ffffff",
+  colorScheme: "light",
+};
+
 export const metadata: Metadata = {
   title: "INKOTANYISINCE90 | Premium Streetwear",
   description: "Minimalist luxury fashion from Rwanda. Premium streetwear since 1990.",
@@ -29,7 +37,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             Skip to content
           </a>
           <Header />
-          <main id="main" className="pt-[76px] sm:pt-[88px]">{children}</main>
+          <main id="main" className="pt-[var(--header-h)]">{children}</main>
           <Footer />
           <CartDrawer />
           <QuickAddModal />

@@ -9,7 +9,7 @@ export default function Loading() {
       aria-label="Loading INKOTANYISINCE90"
     >
       <div className="animate-pulse">
-        <Wordmark className="[&>span:first-child]:text-2xl sm:[&>span:first-child]:text-3xl" />
+        <Wordmark className="[&>span:first-child]:text-[clamp(16px,5.4vw,24px)] sm:[&>span:first-child]:text-3xl" />
       </div>
       <p className="mt-3 text-[10px] uppercase tracking-[0.34em] text-neutral-400">
         Premium streetwear since 1990

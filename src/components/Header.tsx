@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Search, User, ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "@/store/cart";
@@ -29,8 +29,45 @@ export default function Header() {
   const [mobile, setMobile] = useState(false);
   const [search, setSearch] = useState(false);
   const pathname = usePathname();
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => setMobile(false), [pathname]);
+  // Close the menu as soon as the route changes (link tap, back button, etc.)
+  // without an extra effect pass.
+  const [menuPath, setMenuPath] = useState(pathname);
+  if (menuPath !== pathname) {
+    setMenuPath(pathname);
+    setMobile(false);
+  }
+
+  // While the mobile menu is open: lock page scroll, close on Escape and move
+  // focus into the panel. Focus returns to the hamburger when it closes.
+  useEffect(() => {
+    if (!mobile) return;
+    const trigger = menuButtonRef.current;
+    document.body.classList.add("is-locked");
+    closeButtonRef.current?.focus();
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobile(false);
+    };
+    // The hamburger only exists below 768px; close the panel if the window
+    // grows past that point so the page is never left scroll-locked.
+    const desktop = window.matchMedia("(min-width: 768px)");
+    const onResize = (event: MediaQueryListEvent) => {
+      if (event.matches) setMobile(false);
+    };
+
+    window.addEventListener("keydown", onKey);
+    desktop.addEventListener("change", onResize);
+
+    return () => {
+      document.body.classList.remove("is-locked");
+      window.removeEventListener("keydown", onKey);
+      desktop.removeEventListener("change", onResize);
+      trigger?.focus({ preventScroll: true });
+    };
+  }, [mobile]);
 
   const activeSegment = pathname.startsWith("/shop/")
     ? pathname.split("/")[2]
@@ -40,49 +77,56 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-neutral-100 bg-white">
+      <header className="site-header fixed inset-x-0 top-0 z-50 border-b border-neutral-100 bg-white">
         <div className="mx-auto max-w-[1800px] px-4 sm:px-8 lg:px-12">
-          <div className="grid h-[76px] grid-cols-[1fr_auto_1fr] items-center sm:h-[88px]">
-            <div className="flex items-center">
+          <div className="grid h-16 grid-cols-[1fr_auto_1fr] items-center sm:h-[76px] lg:h-[88px]">
+            <div className="flex min-w-0 items-center">
               <button
-                className="p-2 text-neutral-900 transition hover:text-neutral-500 lg:hidden"
+                ref={menuButtonRef}
+                className="-ml-2 grid h-10 w-10 place-items-center text-neutral-900 transition hover:text-neutral-500 sm:-ml-2.5 sm:h-11 sm:w-11 md:hidden"
                 onClick={() => setMobile(true)}
                 aria-label="Open menu"
+                aria-expanded={mobile}
+                aria-controls="mobile-navigation"
               >
-                <Menu size={20} strokeWidth={1.5} />
+                <Menu size={22} strokeWidth={1.5} />
               </button>
               <button
                 onClick={() => setSearch(true)}
-                className="p-2 transition hover:text-neutral-500"
+                className="grid h-10 w-10 place-items-center transition hover:text-neutral-500 sm:h-11 sm:w-11"
                 aria-label="Search products"
               >
                 <Search size={19} strokeWidth={1.5} />
               </button>
               <Link
                 href="/account"
-                className="hidden p-2 transition hover:text-neutral-500 sm:block"
+                className="hidden h-11 w-11 place-items-center transition hover:text-neutral-500 sm:grid"
                 aria-label="Account"
               >
                 <User size={19} strokeWidth={1.5} />
               </Link>
             </div>
 
-            <Link href="/" className="flex flex-col items-center justify-center" aria-label="INKOTANYISINCE90 home">
+            <Link
+              href="/"
+              className="flex min-w-0 flex-col items-center justify-center"
+              aria-label="INKOTANYISINCE90 home"
+            >
               <Wordmark
-                className="[&>span:first-child]:text-[13px] sm:[&>span:first-child]:text-xl [&>span:last-child]:hidden sm:[&>span:last-child]:block"
+                className="[&>span:first-child]:whitespace-nowrap [&>span:first-child]:text-[clamp(9px,3vw,13px)] [&>span:first-child]:tracking-[0.12em] sm:[&>span:first-child]:text-xl sm:[&>span:first-child]:tracking-[0.3em] [&>span:last-child]:hidden sm:[&>span:last-child]:block"
                 sub="Premium streetwear since 1990"
               />
             </Link>
 
-            <div className="flex items-center justify-end">
+            <div className="flex min-w-0 items-center justify-end">
               <button
                 onClick={() => setOpen(true)}
-                className="relative p-2 transition hover:text-neutral-500"
+                className="relative grid h-10 w-10 place-items-center transition hover:text-neutral-500 sm:h-11 sm:w-11"
                 aria-label="Open shopping bag"
               >
                 <ShoppingBag size={20} strokeWidth={1.5} />
                 {count > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-black px-1 text-[9px] font-semibold text-white">
+                  <span className="absolute right-0 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-black px-1 text-[9px] font-semibold text-white sm:right-0.5 sm:top-0.5">
                     {count}
                   </span>
                 )}
@@ -90,8 +134,9 @@ export default function Header() {
             </div>
           </div>
 
+          {/* Desktop navigation — on phones it is replaced by the hamburger menu. */}
           <nav
-            className="flex h-10 items-center justify-start gap-6 overflow-x-auto whitespace-nowrap no-scrollbar sm:justify-center sm:gap-10"
+            className="hidden h-10 items-center justify-center gap-7 whitespace-nowrap md:flex lg:gap-10"
             aria-label="Primary navigation"
           >
             {NAV.map((item) => {
@@ -102,7 +147,7 @@ export default function Header() {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   data-active={active}
-                  className={`link-underline py-2 text-[9px] uppercase tracking-[0.22em] transition sm:text-[10px] ${
+                  className={`link-underline py-2 text-[10px] uppercase tracking-[0.22em] transition ${
                     active
                       ? "font-semibold text-black"
                       : "font-light text-neutral-400 hover:text-neutral-800"
@@ -114,7 +159,8 @@ export default function Header() {
             })}
             <Link
               href="/shop"
-              className={`link-underline hidden py-2 text-[10px] uppercase tracking-[0.22em] transition md:block ${
+              aria-current={activeSegment === "all" ? "page" : undefined}
+              className={`link-underline py-2 text-[10px] uppercase tracking-[0.22em] transition ${
                 activeSegment === "all"
                   ? "font-semibold text-black"
                   : "font-light text-neutral-400 hover:text-neutral-800"
@@ -124,7 +170,7 @@ export default function Header() {
             </Link>
             <Link
               href="/contact"
-              className="link-underline hidden py-2 text-[10px] font-light uppercase tracking-[0.22em] text-neutral-400 transition hover:text-neutral-800 md:block"
+              className="link-underline py-2 text-[10px] font-light uppercase tracking-[0.22em] text-neutral-400 transition hover:text-neutral-800"
             >
               Contact
             </Link>
@@ -133,34 +179,58 @@ export default function Header() {
       </header>
 
       {mobile && (
-        <div className="fixed inset-0 z-[70] lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
-          <div className="animate-fade absolute inset-0 bg-black/25" onClick={() => setMobile(false)} />
-          <div className="absolute inset-y-0 left-0 flex w-[86%] max-w-sm flex-col bg-white text-neutral-900 shadow-xl">
-            <div className="flex h-[76px] items-center justify-between px-5">
+        <div
+          className="fixed inset-0 z-[70] md:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+          id="mobile-navigation"
+        >
+          <div
+            className="animate-fade absolute inset-0 bg-black/30"
+            onClick={() => setMobile(false)}
+            role="presentation"
+          />
+          <div className="animate-drawer absolute inset-y-0 left-0 flex w-[88%] max-w-sm flex-col overflow-y-auto overscroll-contain bg-white pt-[env(safe-area-inset-top)] text-neutral-900 shadow-xl safe-b">
+            <div className="flex h-16 shrink-0 items-center justify-between border-b border-neutral-100 px-4 sm:h-[76px] sm:px-5">
               <Link href="/" aria-label="INKOTANYISINCE90 home" onClick={() => setMobile(false)}>
-                <Wordmark className="[&>span:first-child]:text-base" />
+                <Wordmark className="[&>span:first-child]:text-sm" />
               </Link>
-              <button onClick={() => setMobile(false)} aria-label="Close menu" className="p-2">
+              <button
+                ref={closeButtonRef}
+                onClick={() => setMobile(false)}
+                aria-label="Close menu"
+                className="-mr-2 grid h-11 w-11 place-items-center transition hover:text-neutral-500"
+              >
                 <X size={22} strokeWidth={1.5} />
               </button>
             </div>
 
-            <nav className="px-5 py-3" aria-label="Mobile navigation">
-              {NAV.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="block border-b border-neutral-100 py-4 text-[11px] font-medium uppercase tracking-[0.24em]"
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <div className="pt-5">
+            <nav className="px-4 py-2 sm:px-5" aria-label="Mobile navigation">
+              {NAV.map((item) => {
+                const active = activeSegment === item.segment;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobile(false)}
+                    aria-current={active ? "page" : undefined}
+                    className={`flex min-h-[52px] items-center justify-between border-b border-neutral-100 text-[13px] uppercase tracking-[0.18em] transition ${
+                      active ? "font-semibold text-black" : "font-medium text-neutral-800 hover:text-black"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+              <div className="pt-4">
                 {SECONDARY.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="block py-2.5 text-[10px] uppercase tracking-[0.2em] text-neutral-500 transition hover:text-black"
+                    onClick={() => setMobile(false)}
+                    aria-current={pathname === item.href ? "page" : undefined}
+                    className="flex min-h-[44px] items-center py-2 text-[11px] uppercase tracking-[0.2em] text-neutral-500 transition hover:text-black"
                   >
                     {item.label}
                   </Link>
@@ -168,7 +238,7 @@ export default function Header() {
               </div>
             </nav>
 
-            <p className="mt-auto px-5 pb-7 text-[9px] uppercase leading-relaxed tracking-[0.2em] text-neutral-400">
+            <p className="mt-auto px-4 pb-6 pt-8 text-[10px] uppercase leading-relaxed tracking-[0.2em] text-neutral-400 sm:px-5">
               Minimalist luxury fashion from Rwanda.
               <br />
               Premium streetwear since 1990.
@@ -178,7 +248,6 @@ export default function Header() {
       )}
 
       {search && <SearchOverlay onClose={() => setSearch(false)} />}
-      <div className="h-[116px] sm:h-[128px]" />
     </>
   );
 }

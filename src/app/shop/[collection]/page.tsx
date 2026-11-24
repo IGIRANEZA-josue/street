@@ -44,8 +44,8 @@ export default async function CollectionPage({ params }: { params: Promise<{ col
 
   return (
     <div className="bg-white">
-      <section className="mx-auto max-w-[900px] px-4 pb-10 pt-12 text-center sm:px-6 lg:pt-16">
-        <nav className="text-[9px] font-light uppercase tracking-[0.24em] text-neutral-400" aria-label="Breadcrumb">
+      <section className="mx-auto max-w-[900px] px-4 pb-8 pt-8 text-center sm:px-6 sm:pb-10 sm:pt-12 lg:pt-16">
+        <nav className="flex flex-wrap items-center justify-center gap-y-1 text-[9px] font-light uppercase tracking-[0.2em] text-neutral-400 sm:tracking-[0.24em]" aria-label="Breadcrumb">
           <Link href="/" className="transition hover:text-black">
             Home
           </Link>
@@ -53,22 +53,22 @@ export default async function CollectionPage({ params }: { params: Promise<{ col
           <span className="text-neutral-700">{title}</span>
         </nav>
 
-        <p className="mt-10 text-[9px] font-light uppercase tracking-[0.32em] text-neutral-400">
+        <p className="mt-7 text-[9px] font-light uppercase tracking-[0.32em] text-neutral-400 sm:mt-10">
           {meta?.eyebrow || "INKOTANYISINCE90"}
         </p>
-        <h1 className="mt-3 text-4xl font-semibold uppercase leading-none tracking-[-0.03em] sm:text-6xl">
+        <h1 className="mt-3 text-3xl font-semibold uppercase leading-none tracking-[-0.03em] sm:text-5xl lg:text-6xl">
           {title}
         </h1>
         <p className="mx-auto mt-5 max-w-lg text-sm font-light leading-7 text-neutral-500">{description}</p>
 
-        <div className="mt-9 flex flex-wrap justify-center gap-x-7 gap-y-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-1 sm:mt-9 sm:gap-x-7 sm:gap-y-3">
           {CATEGORY_LINKS.map((link) => {
             const active = link.href === `/shop/${collection}` || (collection === "all" && link.href === "/shop");
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`border-b pb-1 text-[9px] uppercase tracking-[0.22em] transition sm:text-[10px] ${
+                className={`inline-flex min-h-[38px] items-center border-b pb-1 text-[9px] uppercase tracking-[0.2em] transition sm:min-h-0 sm:text-[10px] sm:tracking-[0.22em] ${
                   active
                     ? "border-black font-semibold text-black"
                     : "border-transparent font-light text-neutral-400 hover:border-neutral-300 hover:text-black"
@@ -81,7 +81,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ col
         </div>
       </section>
 
-      <div className="mx-auto max-w-[1320px] px-4 pb-24 sm:px-8 lg:px-12">
+      <div className="mx-auto max-w-[1320px] px-4 pb-16 sm:px-8 sm:pb-24 lg:px-12">
         <ShopClient products={items} title={title} />
       </div>
     </div>

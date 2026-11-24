@@ -16,6 +16,46 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/*
+ * Height of the fixed header, kept in one place so the page offset and any
+ * sticky element can follow the responsive header without double spacing.
+ * Mobile: single 64px bar with hamburger. Tablet: 76px. From 768px the 40px
+ * primary navigation row is added (116px), and the desktop bar is 88px + nav.
+ */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --header-h: calc(64px + var(--safe-top));
+}
+
+@media (min-width: 640px) {
+  :root {
+    --header-h: calc(76px + var(--safe-top));
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-h: calc(116px + var(--safe-top));
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: calc(128px + var(--safe-top));
+  }
+}
+
+/* Notched devices in standalone/installed mode. */
+.site-header {
+  padding-top: var(--safe-top);
+}
+
+footer {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 body {
@@ -26,6 +66,25 @@ body {
   text-rendering: optimizeLegibility;
   /* Guard against accidental horizontal scroll on small screens. */
   overflow-x: clip;
+  min-height: 100%;
+}
+
+/*
+ * Never let a single long word (emails, order codes) push the page sideways.
+ * Kept in the base layer so Tailwind utilities can still opt out.
+ */
+@layer base {
+  h1, h2, h3, h4, h5, h6, p, li, dd, dt, a, span, figcaption {
+    overflow-wrap: break-word;
+  }
+}
+
+/*
+ * Locked while a drawer, menu or modal is open. Only the page scroll is
+ * stopped — touch scrolling inside the panel must keep working.
+ */
+body.is-locked {
+  overflow: hidden;
 }
 
 .font-display,
@@ -110,6 +169,17 @@ select,
 textarea,
 button {
   border-radius: 0;
+}
+
+/* Keep drawers and modals contained on small screens. */
+.overscroll-contain {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Notched phones. */
+.safe-b {
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
 }
 
 @media (prefers-reduced-motion: reduce) {

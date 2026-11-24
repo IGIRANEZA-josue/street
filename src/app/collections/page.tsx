@@ -11,15 +11,15 @@ export const metadata = {
 export default function CollectionsPage() {
   return (
     <div className="bg-white">
-      <section className="mx-auto max-w-3xl px-4 pb-8 pt-14 text-center sm:px-6">
+      <section className="mx-auto max-w-3xl px-4 pb-8 pt-10 text-center sm:px-6 sm:pt-14">
         <p className="text-[9px] font-light uppercase tracking-[0.32em] text-neutral-400">INKOTANYISINCE90</p>
-        <h1 className="mt-4 text-4xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-6xl">Collections</h1>
+        <h1 className="mt-4 text-3xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-5xl lg:text-6xl">Collections</h1>
         <p className="mx-auto mt-5 max-w-lg text-sm font-light leading-7 text-neutral-500">
           Minimalist luxury fashion from Rwanda. Premium streetwear since 1990.
         </p>
       </section>
 
-      <div className="mx-auto grid max-w-[1300px] gap-x-5 gap-y-12 px-4 py-12 sm:grid-cols-2 sm:px-8 lg:px-12">
+      <div className="mx-auto grid max-w-[1300px] gap-x-5 gap-y-10 px-4 py-10 sm:grid-cols-2 sm:gap-y-12 sm:px-8 sm:py-12 lg:px-12">
         {COLLECTIONS.filter((collection) => ["new-arrivals", "men", "women", "accessories"].includes(collection.slug)).map((collection, index) => (
           <Reveal key={collection.slug} delay={(index % 2) * 70}>
             <Link href={`/shop/${collection.slug}`} className="group block text-center">

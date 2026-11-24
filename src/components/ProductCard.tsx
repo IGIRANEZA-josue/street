@@ -28,7 +28,7 @@ export default function ProductCard({ product, priority = false }: { product: Pr
 
   return (
     <article
-      className="group relative flex flex-col bg-white text-center"
+      className="group relative flex min-w-0 flex-col bg-white text-center"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -56,17 +56,17 @@ export default function ProductCard({ product, priority = false }: { product: Pr
         )}
       </Link>
 
-      <div className="flex flex-col items-center px-1 pt-2">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-neutral-800 sm:text-[10px]">
+      <div className="flex min-w-0 flex-col items-center px-1 pt-2">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-800 sm:tracking-[0.18em]">
           {product.sku}
         </p>
         <Link
           href={`/product/${product.slug}`}
-          className="mt-1 line-clamp-1 max-w-full text-[10px] font-normal uppercase tracking-[0.07em] text-neutral-500 transition hover:text-black sm:text-[11px]"
+          className="mt-1 line-clamp-1 max-w-full text-[11px] font-normal uppercase tracking-[0.06em] text-neutral-500 transition hover:text-black sm:text-[11px] sm:tracking-[0.07em]"
         >
           {product.name}
         </Link>
-        <p className="mt-1 text-[10px] font-normal tracking-[0.03em] text-neutral-900 sm:text-[11px]">
+        <p className="mt-1 text-[11px] font-normal tracking-[0.03em] text-neutral-900">
           {formatPrice(product.priceCents)}
         </p>
 
@@ -74,7 +74,7 @@ export default function ProductCard({ product, priority = false }: { product: Pr
           onClick={quickAction}
           disabled={soldOut}
           aria-label={singleSize ? `Add ${product.name} to bag` : `Select size for ${product.name}`}
-          className="mt-1.5 flex h-8 w-8 items-center justify-center rounded-full text-black transition hover:bg-neutral-100 hover:text-neutral-600 disabled:cursor-not-allowed disabled:text-neutral-300"
+          className="mt-1 flex h-11 w-11 items-center justify-center rounded-full text-black transition hover:bg-neutral-100 hover:text-neutral-600 disabled:cursor-not-allowed disabled:text-neutral-300 sm:mt-1.5 sm:h-9 sm:w-9"
         >
           {added ? <Check size={16} strokeWidth={1.5} /> : <Plus size={19} strokeWidth={1.25} />}
         </button>

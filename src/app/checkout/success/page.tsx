@@ -28,12 +28,12 @@ function SuccessInner() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-3xl bg-white px-4 py-20 text-center sm:py-24">
+    <div className="mx-auto max-w-3xl bg-white px-4 py-14 text-center sm:py-24">
       <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-black text-white">
         <CheckCircle2 size={30} strokeWidth={1.5} />
       </span>
       <p className="mt-7 text-[9px] font-light uppercase tracking-[0.32em] text-neutral-400">Order confirmed</p>
-      <h1 className="mt-4 text-4xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-5xl">Thank you</h1>
+      <h1 className="mt-4 text-3xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-5xl">Thank you</h1>
       <p className="mx-auto mt-5 max-w-md text-sm font-light leading-7 text-neutral-500">
         {order ? (
           <>Your order has been received. Order confirmation details were submitted for <strong className="font-medium text-neutral-900">{order.email}</strong>.</>
@@ -42,7 +42,7 @@ function SuccessInner() {
         )}
       </p>
 
-      <div className="mx-auto mt-9 max-w-md border border-neutral-200 p-6 text-left">
+      <div className="mx-auto mt-9 max-w-md border border-neutral-200 p-5 text-left sm:p-6">
         <p className="text-[9px] font-light uppercase tracking-[0.28em] text-neutral-400">Order number</p>
         <p className="mt-2 text-2xl font-semibold tracking-[0.04em]">{order?.orderNumber || orderParam || "IS90-________"}</p>
 
@@ -50,7 +50,7 @@ function SuccessInner() {
           <>
             <ul className="mt-6 space-y-2 border-t border-neutral-100 pt-5 text-sm font-light">
               {order.items.map((item, index) => (
-                <li key={index} className="flex justify-between gap-3">
+                <li key={index} className="flex flex-wrap justify-between gap-x-3 gap-y-1">
                   <span>{item.name} <span className="text-neutral-400">· {item.sku} · Size {item.size} × {item.qty}</span></span>
                   <span>{formatPrice(item.priceCents * item.qty)}</span>
                 </li>
@@ -68,10 +68,10 @@ function SuccessInner() {
       </div>
 
       <div className="mt-9 flex flex-wrap justify-center gap-3">
-        <Link href="/order-status" className="bg-black px-7 py-3.5 text-[10px] font-medium uppercase tracking-[0.22em] text-white transition hover:bg-neutral-800">
+        <Link href="/order-status" className="inline-flex min-h-[48px] items-center bg-black px-7 text-[10px] font-medium uppercase tracking-[0.22em] text-white transition hover:bg-neutral-800">
           View order status
         </Link>
-        <Link href="/shop" className="border border-neutral-300 px-7 py-3.5 text-[10px] font-medium uppercase tracking-[0.22em] transition hover:border-black">
+        <Link href="/shop" className="inline-flex min-h-[48px] items-center border border-neutral-300 px-7 text-[10px] font-medium uppercase tracking-[0.22em] transition hover:border-black">
           Continue shopping
         </Link>
       </div>

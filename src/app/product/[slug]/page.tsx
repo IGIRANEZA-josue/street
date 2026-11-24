@@ -28,8 +28,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     .slice(0, 4);
 
   return (
-    <div className="mx-auto max-w-[1500px] bg-white px-4 py-10 sm:px-8 lg:px-12">
-      <nav className="mb-10 text-[9px] font-light uppercase tracking-[0.24em] text-neutral-400" aria-label="Breadcrumb">
+    <div className="mx-auto max-w-[1500px] bg-white px-4 py-8 sm:px-8 sm:py-10 lg:px-12">
+      <nav className="mb-7 flex flex-wrap items-center gap-y-1 text-[9px] font-light uppercase leading-5 tracking-[0.18em] text-neutral-400 sm:mb-10 sm:tracking-[0.24em]" aria-label="Breadcrumb">
         <Link href="/" className="transition hover:text-black">Home</Link>
         <span className="mx-2 text-neutral-300">/</span>
         <Link href="/shop" className="transition hover:text-black">Catalogue</Link>
@@ -41,9 +41,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <ProductDetailClient product={product} />
 
-      <section className="mt-24 border-t border-neutral-100 pt-12">
+      <section className="mt-16 border-t border-neutral-100 pt-10 sm:mt-24 sm:pt-12">
         <Reveal>
-          <div className="mb-9 flex items-end justify-between">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-3 sm:mb-9">
             <div>
               <p className="text-[9px] font-light uppercase tracking-[0.3em] text-neutral-400">More</p>
               <h2 className="mt-2 text-xl font-medium uppercase tracking-[0.08em]">You may also like</h2>

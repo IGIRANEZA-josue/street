@@ -64,11 +64,11 @@ export function NewsletterForm({ source = "footer" }: { dark?: boolean; source?:
             setState("idle");
           }}
           placeholder="Email address"
-          className="w-full bg-white px-4 py-3.5 text-sm font-light normal-case tracking-normal placeholder:text-neutral-400 focus:outline-none"
+          className="min-w-0 w-full bg-white px-4 py-3.5 text-base font-light normal-case tracking-normal placeholder:text-neutral-400 focus:outline-none sm:text-sm"
         />
         <button
           disabled={state === "loading"}
-          className="shrink-0 bg-black px-5 text-[10px] font-medium uppercase tracking-[0.18em] text-white transition hover:bg-neutral-800 disabled:opacity-50"
+          className="min-h-[48px] shrink-0 bg-black px-4 text-[10px] font-medium uppercase tracking-[0.14em] text-white transition hover:bg-neutral-800 disabled:opacity-50 sm:px-5 sm:tracking-[0.18em]"
         >
           {state === "loading" ? "Submitting..." : "Subscribe"}
         </button>
@@ -78,7 +78,7 @@ export function NewsletterForm({ source = "footer" }: { dark?: boolean; source?:
           {message}
         </p>
       )}
-      <p className="mt-3 text-[9px] font-light uppercase leading-relaxed tracking-[0.11em] text-neutral-500">
+      <p className="mt-3 text-[10px] font-light uppercase leading-relaxed tracking-[0.11em] text-neutral-500">
         <strong className="font-semibold text-neutral-700">I consent to receive INKOTANYISINCE90 email marketing.</strong>{" "}
         Consent is not required for purchase. Read our{" "}
         <Link href="/privacy" className="underline">
@@ -126,11 +126,11 @@ const columns = [
 export default function Footer() {
   return (
     <footer className="border-t border-neutral-100 bg-white text-neutral-900">
-      <div className="mx-auto max-w-[1500px] px-4 py-16 sm:px-8 lg:px-12">
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
+      <div className="mx-auto max-w-[1500px] px-4 py-14 sm:px-8 sm:py-16 lg:px-12">
+        <div className="grid gap-10 sm:gap-12 lg:grid-cols-12">
+          <div className="min-w-0 lg:col-span-5">
             <Link href="/" className="inline-flex flex-col items-start" aria-label="INKOTANYISINCE90 home">
-              <Wordmark className="[&>span:first-child]:text-xl" />
+              <Wordmark className="[&>span:first-child]:text-[clamp(15px,4.4vw,20px)]" />
             </Link>
 
             <p className="mt-5 max-w-sm text-sm font-light leading-7 text-neutral-500">
@@ -156,35 +156,37 @@ export default function Footer() {
             </div>
           </div>
 
-          {columns.map((column) => (
-            <nav key={column.title} className="lg:col-span-2" aria-label={column.title}>
-              <p className="text-[9px] font-medium uppercase tracking-[0.3em] text-neutral-400">{column.title}</p>
-              <ul className="mt-5 space-y-3">
-                {column.links.map(([label, href]) => (
-                  <li key={href}>
-                    <Link
-                      href={href}
-                      className="text-sm font-light text-neutral-500 transition hover:text-black hover:underline hover:underline-offset-4"
-                    >
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          ))}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 lg:col-span-7 lg:gap-x-4">
+            {columns.map((column) => (
+              <nav key={column.title} className="min-w-0" aria-label={column.title}>
+                <p className="text-[9px] font-medium uppercase tracking-[0.3em] text-neutral-400">{column.title}</p>
+                <ul className="mt-4 space-y-1 sm:mt-5 sm:space-y-3">
+                  {column.links.map(([label, href]) => (
+                    <li key={href}>
+                      <Link
+                        href={href}
+                        className="inline-block py-1.5 text-sm font-light text-neutral-500 transition hover:text-black hover:underline hover:underline-offset-4"
+                      >
+                        {label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
 
-          <div className="lg:col-span-1">
-            <p className="text-[9px] font-medium uppercase tracking-[0.3em] text-neutral-400">Payment</p>
-            <p className="mt-5 text-sm font-light leading-7 text-neutral-500">
-              MTN Mobile Money
-              <br />
-              RWF
-            </p>
+            <div className="min-w-0">
+              <p className="text-[9px] font-medium uppercase tracking-[0.3em] text-neutral-400">Payment</p>
+              <p className="mt-4 text-sm font-light leading-7 text-neutral-500 sm:mt-5">
+                MTN Mobile Money
+                <br />
+                RWF
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center justify-between gap-3 border-t border-neutral-100 pt-6 text-[9px] uppercase tracking-[0.22em] text-neutral-400 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-neutral-100 pt-6 text-[9px] uppercase tracking-[0.22em] text-neutral-400 sm:mt-16 sm:flex-row">
           <p>© {new Date().getFullYear()} INKOTANYISINCE90</p>
           <p>Kigali, Rwanda</p>
         </div>

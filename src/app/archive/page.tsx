@@ -17,16 +17,16 @@ export default async function ArchivePage() {
 
   return (
     <div className="bg-white">
-      <section className="mx-auto max-w-4xl px-4 pb-12 pt-16 text-center sm:px-6">
+      <section className="mx-auto max-w-4xl px-4 pb-10 pt-10 text-center sm:px-6 sm:pb-12 sm:pt-16">
         <p className="text-[9px] font-light uppercase tracking-[0.32em] text-neutral-400">INKOTANYISINCE90</p>
-        <h1 className="mt-4 text-4xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-6xl">Archive</h1>
+        <h1 className="mt-4 text-3xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-5xl lg:text-6xl">Archive</h1>
         <p className="mx-auto mt-5 max-w-xl text-sm font-light leading-7 text-neutral-500">
           SINCE 90, URUGWIRO, BSL, INK LEGACY, LEGACY, SAVE, URW and UMURAGE.
         </p>
       </section>
 
       {urugwiro && (
-        <section className="mx-auto grid max-w-[1200px] items-center gap-8 px-4 pb-20 sm:px-8 lg:grid-cols-2 lg:px-12">
+        <section className="mx-auto grid max-w-[1200px] items-center gap-8 px-4 pb-14 sm:px-8 sm:pb-20 lg:grid-cols-2 lg:px-12">
           <Reveal>
             <Link href={`/product/${urugwiro.slug}`} className="group relative block aspect-square overflow-hidden bg-white">
               <Image src={urugwiro.images[2] || urugwiro.image} alt="URUGWIRO — official product photography" fill className="product-photo object-contain p-[4%]" sizes="(max-width: 1024px) 100vw, 50vw" />
@@ -43,9 +43,9 @@ export default async function ArchivePage() {
         </section>
       )}
 
-      <section className="mx-auto max-w-[1500px] px-4 pb-24 sm:px-8 lg:px-12">
+      <section className="mx-auto max-w-[1500px] px-4 pb-16 sm:px-8 sm:pb-24 lg:px-12">
         <Reveal>
-          <div className="mb-9 flex items-end justify-between border-t border-neutral-100 pt-10">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-3 border-t border-neutral-100 pt-8 sm:mb-9 sm:pt-10">
             <div>
               <p className="text-[9px] font-light uppercase tracking-[0.3em] text-neutral-400">Selection</p>
               <h2 className="mt-2 text-xl font-medium uppercase tracking-[0.08em]">Products</h2>

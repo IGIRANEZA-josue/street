@@ -7,7 +7,7 @@ import { ArrowLeft, Check, Lock } from "lucide-react";
 import { formatPrice } from "@/lib/catalog";
 import { useCart } from "@/store/cart";
 
-const inputClass = "w-full border border-neutral-200 bg-white px-4 py-3 text-sm font-light focus:border-black focus:outline-none placeholder:text-neutral-400";
+const inputClass = "w-full min-h-[48px] border border-neutral-200 bg-white px-4 py-3 text-base font-light focus:border-black focus:outline-none placeholder:text-neutral-400 sm:text-sm";
 const labelClass = "mb-1.5 block text-[9px] font-medium uppercase tracking-[0.24em] text-neutral-500";
 
 export default function CheckoutPage() {
@@ -83,7 +83,7 @@ export default function CheckoutPage() {
       <div className="mx-auto max-w-2xl px-4 py-24 text-center">
         <p className="text-3xl font-semibold uppercase tracking-[-0.02em]">Your cart is empty</p>
         <p className="mt-3 text-sm font-light text-neutral-500">Continue shopping to add INKOTANYISINCE90 products.</p>
-        <Link href="/shop" className="mt-7 inline-block bg-black px-7 py-3.5 text-[10px] font-medium uppercase tracking-[0.22em] text-white transition hover:bg-neutral-800">
+        <Link href="/shop" className="mt-7 inline-flex min-h-[48px] items-center bg-black px-7 text-[10px] font-medium uppercase tracking-[0.22em] text-white transition hover:bg-neutral-800">
           Continue shopping
         </Link>
       </div>
@@ -106,21 +106,21 @@ export default function CheckoutPage() {
   );
 
   return (
-    <div className="mx-auto max-w-[1300px] bg-white px-4 py-12 sm:px-8 lg:px-12">
+    <div className="mx-auto max-w-[1300px] bg-white px-4 py-8 sm:px-8 sm:py-12 lg:px-12">
       <Link href="/shop" className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.22em] text-neutral-500 transition hover:text-black">
         <ArrowLeft size={14} /> Continue shopping
       </Link>
       <div className="mt-8 text-center sm:text-left">
-        <h1 className="text-4xl font-semibold uppercase tracking-[-0.03em] sm:text-5xl">Checkout</h1>
+        <h1 className="text-3xl font-semibold uppercase tracking-[-0.03em] sm:text-4xl lg:text-5xl">Checkout</h1>
         <p className="mt-3 text-sm font-light text-neutral-500">Review your order details and confirm payment securely.</p>
       </div>
 
-      <form onSubmit={placeOrder} className="mt-11 grid gap-12 lg:grid-cols-[1fr_400px]" noValidate>
+      <form onSubmit={placeOrder} className="mt-8 grid gap-10 sm:mt-11 sm:gap-12 lg:grid-cols-[1fr_400px]" noValidate>
         <div>
           <section>
             <h2 className="text-xs font-semibold uppercase tracking-[0.24em]">Payment Method</h2>
-            <div className="mt-5 border border-black bg-neutral-50 p-5">
-              <div className="flex items-start justify-between gap-4">
+            <div className="mt-5 border border-black bg-neutral-50 p-4 sm:p-5">
+              <div className="flex flex-wrap items-start justify-between gap-3 sm:gap-4">
                 <div>
                   <p className="text-sm font-semibold uppercase tracking-[0.1em]">MTN Mobile Money</p>
                   <p className="mt-1 text-sm font-light text-neutral-500">Pay securely using your MTN phone number.</p>
@@ -136,7 +136,7 @@ export default function CheckoutPage() {
             </div>
           </section>
 
-          <section className="mt-12">
+          <section className="mt-10 sm:mt-12">
             <h2 className="text-xs font-semibold uppercase tracking-[0.24em]">Contact Information</h2>
             <div className="mt-5">
               <Field label="Email Address" field="email" type="email" placeholder="you@example.com" />
@@ -147,7 +147,7 @@ export default function CheckoutPage() {
             </div>
           </section>
 
-          <section className="mt-12">
+          <section className="mt-10 sm:mt-12">
             <h2 className="text-xs font-semibold uppercase tracking-[0.24em]">Shipping Address</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <Field label="First Name" field="firstName" placeholder="First name" />
@@ -173,7 +173,7 @@ export default function CheckoutPage() {
           </p>
         </div>
 
-        <aside className="h-fit border border-neutral-200 bg-white p-6 lg:sticky lg:top-40">
+        <aside className="h-fit border border-neutral-200 bg-white p-5 sm:p-6 lg:sticky lg:top-[calc(var(--header-h)+2rem)]">
           <h2 className="text-xs font-semibold uppercase tracking-[0.24em]">Your Cart</h2>
           <ul className="mt-6 space-y-5">
             {items.map((item) => (
@@ -193,7 +193,7 @@ export default function CheckoutPage() {
                     <p className="mt-1 text-xs font-light uppercase leading-relaxed text-neutral-600">{item.name}</p>
                     <p className="text-[10px] uppercase tracking-[0.14em] text-neutral-400">Size {item.size}</p>
                   </div>
-                  <p className="text-xs font-medium">{formatPrice(item.priceCents * item.qty)}</p>
+                  <p className="shrink-0 text-xs font-medium">{formatPrice(item.priceCents * item.qty)}</p>
                 </div>
               </li>
             ))}
@@ -208,7 +208,7 @@ export default function CheckoutPage() {
 
           {serverError && <p className="mt-5 border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">{serverError}</p>}
 
-          <button disabled={placing} className="mt-6 flex w-full items-center justify-center gap-2 bg-black py-4 text-[11px] font-medium uppercase tracking-[0.24em] text-white transition hover:bg-neutral-800 disabled:opacity-50">
+          <button disabled={placing} className="mt-6 flex min-h-[52px] w-full items-center justify-center gap-2 bg-black py-4 text-[11px] font-medium uppercase tracking-[0.2em] text-white transition hover:bg-neutral-800 disabled:opacity-50 sm:tracking-[0.24em]">
             <Lock size={14} /> {placing ? "Confirming..." : "Continue to Payment"}
           </button>
           <p className="mt-3 text-center text-[9px] uppercase leading-relaxed tracking-[0.16em] text-neutral-400">Secure payment confirmation · All sales final</p>

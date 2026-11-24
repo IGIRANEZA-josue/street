@@ -19,14 +19,14 @@ const FAQS = [
 export default function FaqPage() {
   const [open, setOpen] = useState(0);
   return (
-    <div className="mx-auto max-w-3xl bg-white px-4 py-16 sm:px-6 sm:py-20">
+    <div className="mx-auto max-w-3xl bg-white px-4 py-12 sm:px-6 sm:py-20">
       <p className="text-[9px] font-light uppercase tracking-[0.32em] text-neutral-400">Support</p>
-      <h1 className="mt-4 text-4xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-5xl">FAQ</h1>
+      <h1 className="mt-4 text-3xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-5xl">FAQ</h1>
       <div className="mt-10 border-t border-neutral-100">
         {FAQS.map((item, index) => (
           <div key={item.q} className="border-b border-neutral-100">
-            <button onClick={() => setOpen(open === index ? -1 : index)} className="flex w-full items-center justify-between gap-4 py-5 text-left" aria-expanded={open === index}>
-              <span className="text-sm font-medium uppercase tracking-[0.08em] sm:text-base">{item.q}</span>
+            <button onClick={() => setOpen(open === index ? -1 : index)} className="flex min-h-[56px] w-full items-center justify-between gap-3 py-5 text-left" aria-expanded={open === index}>
+              <span className="text-[13px] font-medium uppercase leading-relaxed tracking-[0.06em] sm:text-base sm:tracking-[0.08em]">{item.q}</span>
               <ChevronDown size={18} strokeWidth={1.5} className={`shrink-0 transition-transform ${open === index ? "rotate-180" : "text-neutral-400"}`} />
             </button>
             {open === index && <p className="pb-6 text-sm font-light leading-7 text-neutral-500">{item.a}</p>}

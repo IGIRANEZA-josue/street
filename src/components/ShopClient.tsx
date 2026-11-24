@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SlidersHorizontal, X, Check } from "lucide-react";
 import { formatPrice, type Product } from "@/lib/catalog";
 import ProductCard from "./ProductCard";
@@ -20,6 +20,19 @@ export default function ShopClient({ products, title }: { products: Product[]; t
   const [maxPrice, setMaxPrice] = useState(23000);
   const [inStockOnly, setInStockOnly] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
+
+  useEffect(() => {
+    if (!filtersOpen) return;
+    document.body.classList.add("is-locked");
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setFiltersOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.classList.remove("is-locked");
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [filtersOpen]);
 
   const allSizes = useMemo(() => Array.from(new Set(products.flatMap((product) => product.sizes))), [products]);
 
@@ -63,7 +76,7 @@ export default function ShopClient({ products, title }: { products: Product[]; t
         <p className="text-[9px] font-medium uppercase tracking-[0.28em] text-neutral-400">Category</p>
         <div className="mt-4 space-y-2.5">
           {CATEGORY_OPTIONS.map((option) => (
-            <label key={option.value} className="flex cursor-pointer items-center gap-2.5 text-sm font-light transition hover:text-black">
+            <label key={option.value} className="flex min-h-[36px] cursor-pointer items-center gap-2.5 text-sm font-light transition hover:text-black">
               <span className={`grid h-4 w-4 place-items-center border ${categories.includes(option.value) ? "border-black bg-black text-white" : "border-neutral-300 bg-white"}`}>
                 {categories.includes(option.value) && <Check size={11} />}
               </span>
@@ -78,7 +91,7 @@ export default function ShopClient({ products, title }: { products: Product[]; t
         <p className="text-[9px] font-medium uppercase tracking-[0.28em] text-neutral-400">Size</p>
         <div className="mt-4 flex flex-wrap gap-1.5">
           {allSizes.map((size) => (
-            <button key={size} onClick={() => toggle(sizes, size, setSizes)} className={`min-w-10 px-2 py-2 text-[10px] font-medium uppercase ${sizes.includes(size) ? "bg-black text-white" : "border border-neutral-200 hover:border-black"}`}>
+            <button key={size} onClick={() => toggle(sizes, size, setSizes)} aria-pressed={sizes.includes(size)} className={`min-h-[40px] min-w-11 px-2.5 py-2 text-[10px] font-medium uppercase ${sizes.includes(size) ? "bg-black text-white" : "border border-neutral-200 hover:border-black"}`}>
               {size}
             </button>
           ))}
@@ -96,7 +109,7 @@ export default function ShopClient({ products, title }: { products: Product[]; t
         </div>
       </div>
 
-      <label className="flex cursor-pointer items-center gap-2.5 text-sm font-light">
+      <label className="flex min-h-[36px] cursor-pointer items-center gap-2.5 text-sm font-light">
         <span className={`grid h-4 w-4 place-items-center border ${inStockOnly ? "border-black bg-black text-white" : "border-neutral-300 bg-white"}`}>
           {inStockOnly && <Check size={11} />}
         </span>
@@ -105,7 +118,7 @@ export default function ShopClient({ products, title }: { products: Product[]; t
       </label>
 
       {activeCount > 0 && (
-        <button onClick={clear} className="w-full border border-black py-3 text-[10px] font-medium uppercase tracking-[0.2em] transition hover:bg-black hover:text-white">
+        <button onClick={clear} className="min-h-[48px] w-full border border-black py-3 text-[10px] font-medium uppercase tracking-[0.2em] transition hover:bg-black hover:text-white">
           Clear all ({activeCount})
         </button>
       )}
@@ -114,20 +127,20 @@ export default function ShopClient({ products, title }: { products: Product[]; t
 
   return (
     <div className="lg:grid lg:grid-cols-[210px_1fr] lg:gap-12">
-      <aside className="sticky top-40 hidden self-start lg:block">{filterBody}</aside>
+      <aside className="sticky top-[calc(var(--header-h)+2rem)] hidden self-start lg:block">{filterBody}</aside>
 
       <div>
-        <div className="mb-8 flex items-center justify-between gap-3 border-y border-neutral-100 py-3">
-          <p className="text-[10px] font-light uppercase tracking-[0.2em] text-neutral-500" role="status">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-2 border-y border-neutral-100 py-3 sm:mb-8 sm:gap-3">
+          <p className="text-[10px] font-light uppercase tracking-[0.16em] text-neutral-500 sm:tracking-[0.2em]" role="status">
             {filtered.length} product{filtered.length === 1 ? "" : "s"} — {title}
           </p>
-          <div className="flex items-center gap-2">
-            <button onClick={() => setFiltersOpen(true)} className="flex items-center gap-2 border border-neutral-300 px-4 py-2.5 text-[10px] font-medium uppercase tracking-[0.18em] lg:hidden">
+          <div className="flex min-w-0 items-center gap-2">
+            <button onClick={() => setFiltersOpen(true)} aria-expanded={filtersOpen} aria-controls="filter-panel" className="flex min-h-[42px] items-center gap-2 border border-neutral-300 px-3 text-[10px] font-medium uppercase tracking-[0.16em] sm:px-4 sm:tracking-[0.18em] lg:hidden">
               <SlidersHorizontal size={13} /> Filters {activeCount > 0 && <span className="grid h-4 w-4 place-items-center rounded-full bg-black text-[9px] text-white">{activeCount}</span>}
             </button>
-            <label className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.18em]">
+            <label className="flex min-w-0 items-center gap-2 text-[10px] font-medium uppercase tracking-[0.18em]">
               <span className="hidden sm:inline">Sort</span>
-              <select value={sort} onChange={(event) => setSort(event.target.value as Sort)} className="border border-neutral-200 bg-white px-3 py-2.5 text-[10px] uppercase tracking-[0.1em] focus:border-black focus:outline-none" aria-label="Sort products">
+              <select value={sort} onChange={(event) => setSort(event.target.value as Sort)} className="max-w-[168px] min-h-[42px] border border-neutral-200 bg-white px-2 py-2.5 text-[16px] uppercase tracking-[0.06em] focus:border-black focus:outline-none sm:max-w-none sm:px-3 sm:text-[10px] sm:tracking-[0.1em]" aria-label="Sort products">
                 <option value="featured">Featured</option>
                 <option value="code">Code</option>
                 <option value="price-asc">Price, low to high</option>
@@ -139,7 +152,7 @@ export default function ShopClient({ products, title }: { products: Product[]; t
         </div>
 
         {filtered.length === 0 ? (
-          <div className="border border-neutral-200 px-6 py-20 text-center">
+          <div className="border border-neutral-200 px-4 py-16 text-center sm:px-6 sm:py-20">
             <p className="text-xl font-light uppercase tracking-[0.08em]">No products match these filters</p>
             <p className="mx-auto mt-3 max-w-sm text-sm font-light leading-7 text-neutral-500">Remove a size or category, or view the complete catalogue.</p>
             <button onClick={clear} className="mt-7 bg-black px-6 py-3 text-[10px] font-medium uppercase tracking-[0.2em] text-white">Clear filters</button>
@@ -156,15 +169,15 @@ export default function ShopClient({ products, title }: { products: Product[]; t
       {filtersOpen && (
         <div className="fixed inset-0 z-[80] lg:hidden">
           <div className="animate-fade absolute inset-0 bg-black/30" onClick={() => setFiltersOpen(false)} />
-          <div className="animate-drawer absolute inset-y-0 right-0 w-[88%] max-w-sm overflow-y-auto bg-white p-6">
-            <div className="mb-7 flex items-center justify-between">
+          <div id="filter-panel" className="animate-drawer absolute inset-y-0 right-0 w-[92%] max-w-sm overflow-y-auto overscroll-contain bg-white p-5 pb-7 sm:p-6">
+            <div className="mb-6 flex items-center justify-between">
               <p className="text-sm font-semibold uppercase tracking-[0.22em]">Filters</p>
-              <button onClick={() => setFiltersOpen(false)} aria-label="Close filters">
+              <button onClick={() => setFiltersOpen(false)} aria-label="Close filters" className="-mr-2 grid h-11 w-11 place-items-center">
                 <X size={22} strokeWidth={1.5} />
               </button>
             </div>
             {filterBody}
-            <button onClick={() => setFiltersOpen(false)} className="mt-9 w-full bg-black py-4 text-[10px] font-medium uppercase tracking-[0.22em] text-white">
+            <button onClick={() => setFiltersOpen(false)} className="mt-8 min-h-[52px] w-full bg-black py-4 text-[10px] font-medium uppercase tracking-[0.22em] text-white">
               Show {filtered.length} products
             </button>
           </div>

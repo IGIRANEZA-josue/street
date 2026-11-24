@@ -13,7 +13,7 @@ function Accordion({ title, children, openDefault = false }: { title: string; ch
   const [open, setOpen] = useState(openDefault);
   return (
     <div className="border-b border-neutral-100">
-      <button onClick={() => setOpen(!open)} className="flex w-full items-center justify-between py-4 text-left text-[10px] font-medium uppercase tracking-[0.22em]" aria-expanded={open}>
+      <button onClick={() => setOpen(!open)} className="flex min-h-[48px] w-full items-center justify-between gap-4 py-4 text-left text-[10px] font-medium uppercase tracking-[0.22em]" aria-expanded={open}>
         {title}
         <ChevronDown size={15} strokeWidth={1.5} className={`transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
@@ -34,20 +34,20 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const next = () => setImageIndex((current) => (current + 1) % product.images.length);
 
   return (
-    <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
+    <div className="grid gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-20">
       <div>
-        <div className="lg:sticky lg:top-36">
-          <div className="relative mx-auto aspect-square max-w-[560px] overflow-hidden bg-white">
+        <div className="lg:sticky lg:top-[calc(var(--header-h)+1rem)]">
+          <div className="relative mx-auto aspect-square w-full max-w-[560px] overflow-hidden bg-white">
             <div key={imageIndex} className="animate-fade h-full">
               <ProductVisual product={product} imageIndex={imageIndex} priority />
             </div>
 
             {product.images.length > 1 && (
               <>
-                <button onClick={previous} className="absolute left-1 top-1/2 -translate-y-1/2 p-2 text-black transition hover:text-neutral-400" aria-label="Previous image">
+                <button onClick={previous} className="absolute left-0 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center text-black transition hover:text-neutral-400" aria-label="Previous image">
                   <ChevronLeft size={22} strokeWidth={1.5} />
                 </button>
-                <button onClick={next} className="absolute right-1 top-1/2 -translate-y-1/2 p-2 text-black transition hover:text-neutral-400" aria-label="Next image">
+                <button onClick={next} className="absolute right-0 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center text-black transition hover:text-neutral-400" aria-label="Next image">
                   <ChevronRight size={22} strokeWidth={1.5} />
                 </button>
                 <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
@@ -81,13 +81,13 @@ export default function ProductDetailClient({ product }: { product: Product }) {
         </div>
       </div>
 
-      <div className="mx-auto w-full max-w-xl lg:mx-0">
+      <div className="mx-auto min-w-0 w-full max-w-xl lg:mx-0">
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-800">{product.sku}</p>
         <h1 className="mt-3 text-3xl font-semibold uppercase leading-tight tracking-[-0.02em] sm:text-4xl">{product.name}</h1>
         <p className="mt-3 text-[10px] font-light uppercase tracking-[0.24em] text-neutral-400">{product.categoryLabel}</p>
         <p className="mt-6 text-base font-light leading-8 text-neutral-600">{product.description}</p>
 
-        <div className="mt-7 flex items-baseline justify-between border-y border-neutral-100 py-5">
+        <div className="mt-7 flex flex-wrap items-baseline justify-between gap-2 border-y border-neutral-100 py-5">
           <span className="text-lg font-normal">{formatPrice(product.priceCents)}</span>
           <span className="text-[9px] uppercase tracking-[0.22em] text-neutral-400">{soldOut ? "Sold out" : "In stock"}</span>
         </div>
@@ -105,7 +105,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   setError("");
                 }}
                 aria-pressed={size === itemSize}
-                className={`py-3 text-[11px] font-medium uppercase tracking-[0.1em] transition ${size === itemSize ? "bg-black text-white" : "border border-neutral-200 bg-white hover:border-black"}`}
+                className={`min-h-[44px] px-1 py-3 text-[11px] font-medium uppercase tracking-[0.1em] transition ${size === itemSize ? "bg-black text-white" : "border border-neutral-200 bg-white hover:border-black"}`}
               >
                 {itemSize}
               </button>
@@ -116,13 +116,13 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </Link>
         </div>
 
-        <div className="mt-8 flex gap-2">
-          <div className="flex items-center border border-neutral-300">
-            <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-3.5 py-3.5 transition hover:text-neutral-400" aria-label="Decrease quantity">
+        <div className="mt-8 flex flex-col gap-2 sm:flex-row">
+          <div className="flex items-center justify-between border border-neutral-300 sm:justify-start">
+            <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="grid h-12 w-12 place-items-center transition hover:text-neutral-400" aria-label="Decrease quantity">
               <Minus size={14} />
             </button>
             <span className="w-9 text-center text-sm font-medium">{quantity}</span>
-            <button onClick={() => setQuantity(Math.min(9, quantity + 1))} className="px-3.5 py-3.5 transition hover:text-neutral-400" aria-label="Increase quantity">
+            <button onClick={() => setQuantity(Math.min(9, quantity + 1))} className="grid h-12 w-12 place-items-center transition hover:text-neutral-400" aria-label="Increase quantity">
               <Plus size={14} />
             </button>
           </div>
@@ -135,9 +135,10 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               }
               add(product, size, "As shown", quantity);
             }}
-            className="flex flex-1 items-center justify-center gap-2 bg-black py-3.5 text-[11px] font-medium uppercase tracking-[0.22em] text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-300"
+            className="flex min-h-[52px] flex-1 items-center justify-center gap-2 bg-black px-3 py-3.5 text-center text-[10px] font-medium uppercase tracking-[0.16em] text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-300 sm:text-[11px] sm:tracking-[0.22em]"
           >
-            <ShoppingBag size={15} /> {soldOut ? "Sold out" : `Add to bag — ${formatPrice(product.priceCents * quantity)}`}
+            <ShoppingBag size={15} className="shrink-0" />
+            <span className="leading-tight">{soldOut ? "Sold out" : `Add to bag — ${formatPrice(product.priceCents * quantity)}`}</span>
           </button>
         </div>
 
@@ -148,10 +149,10 @@ export default function ProductDetailClient({ product }: { product: Product }) {
         <div className="mt-9 border-t border-neutral-100">
           <Accordion title="Product details" openDefault>
             <dl className="space-y-2">
-              <div className="flex justify-between gap-6"><dt>Product code</dt><dd className="text-neutral-800">{product.sku}</dd></div>
-              <div className="flex justify-between gap-6"><dt>Category</dt><dd className="text-neutral-800">{product.categoryLabel}</dd></div>
-              <div className="flex justify-between gap-6"><dt>Available sizes</dt><dd className="text-right text-neutral-800">{product.sizes.join(", ")}</dd></div>
-              <div className="flex justify-between gap-6"><dt>Availability</dt><dd className="text-neutral-800">{soldOut ? "Sold out" : "In stock"}</dd></div>
+              <div className="flex justify-between gap-4"><dt className="shrink-0">Product code</dt><dd className="min-w-0 text-right text-neutral-800">{product.sku}</dd></div>
+              <div className="flex justify-between gap-4"><dt className="shrink-0">Category</dt><dd className="min-w-0 text-right text-neutral-800">{product.categoryLabel}</dd></div>
+              <div className="flex justify-between gap-4"><dt className="shrink-0">Available sizes</dt><dd className="min-w-0 text-right text-neutral-800">{product.sizes.join(", ")}</dd></div>
+              <div className="flex justify-between gap-4"><dt className="shrink-0">Availability</dt><dd className="min-w-0 text-right text-neutral-800">{soldOut ? "Sold out" : "In stock"}</dd></div>
             </dl>
           </Accordion>
           <Accordion title="Shipping">

@@ -10,7 +10,7 @@ export default function Page() {
         <p>Most INKOTANYISINCE90 apparel is available in the following sizes:</p>
         <div className="mt-5 grid grid-cols-3 gap-2 sm:grid-cols-6">
           {["S", "M", "L", "XL", "2XL", "3XL"].map((size) => (
-            <span key={size} className="border border-neutral-200 py-4 text-center text-sm font-medium text-neutral-900">{size}</span>
+            <span key={size} className="grid min-h-[52px] place-items-center border border-neutral-200 px-1 py-4 text-center text-sm font-medium text-neutral-900">{size}</span>
           ))}
         </div>
       </section>

@@ -8,7 +8,7 @@ import { formatPrice } from "@/lib/catalog";
 type Customer = { id: number; email: string; name: string };
 type OrderRow = { orderNumber: string; totalCents: number; status: string; createdAt: string };
 
-const inputClass = "w-full border border-neutral-200 bg-white px-4 py-3 text-sm font-light focus:border-black focus:outline-none placeholder:text-neutral-400";
+const inputClass = "w-full min-h-[48px] border border-neutral-200 bg-white px-4 py-3 text-base font-light focus:border-black focus:outline-none placeholder:text-neutral-400 sm:text-sm";
 const labelClass = "mb-1.5 block text-[9px] font-medium uppercase tracking-[0.24em] text-neutral-500";
 
 export default function AccountPage() {
@@ -62,9 +62,9 @@ export default function AccountPage() {
 
   if (customer) {
     return (
-      <div className="mx-auto max-w-4xl bg-white px-4 py-16 sm:px-6">
+      <div className="mx-auto max-w-4xl bg-white px-4 py-10 sm:px-6 sm:py-16">
         <p className="text-[9px] font-light uppercase tracking-[0.32em] text-neutral-400">My Account</p>
-        <h1 className="mt-4 text-4xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-5xl">Hello, {customer.name.split(" ")[0]}</h1>
+        <h1 className="mt-4 break-words text-3xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-5xl">Hello, {customer.name.split(" ")[0]}</h1>
         <p className="mt-3 text-sm font-light text-neutral-500">{customer.email}</p>
 
         <div className="mt-10 border border-neutral-200">
@@ -81,7 +81,7 @@ export default function AccountPage() {
           ) : (
             <ul className="divide-y divide-neutral-100">
               {orders.map((order) => (
-                <li key={order.orderNumber} className="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
+                <li key={order.orderNumber} className="flex flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-5">
                   <div>
                     <p className="text-sm font-semibold tracking-[0.06em]">{order.orderNumber}</p>
                     <p className="mt-0.5 text-xs font-light text-neutral-400">{new Date(order.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</p>
@@ -95,8 +95,8 @@ export default function AccountPage() {
         </div>
 
         <div className="mt-7 flex flex-wrap gap-3">
-          <Link href="/order-status" className="border border-black px-6 py-3 text-[10px] font-medium uppercase tracking-[0.2em] transition hover:bg-black hover:text-white">Check order status</Link>
-          <button onClick={logout} className="flex items-center gap-2 border border-neutral-300 px-6 py-3 text-[10px] font-medium uppercase tracking-[0.2em] transition hover:border-black">
+          <Link href="/order-status" className="inline-flex min-h-[46px] items-center border border-black px-6 text-[10px] font-medium uppercase tracking-[0.2em] transition hover:bg-black hover:text-white">Check order status</Link>
+          <button onClick={logout} className="flex min-h-[46px] items-center gap-2 border border-neutral-300 px-6 text-[10px] font-medium uppercase tracking-[0.2em] transition hover:border-black">
             <LogOut size={14} /> Sign out
           </button>
         </div>
@@ -105,9 +105,9 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="mx-auto max-w-md bg-white px-4 py-16 sm:py-20">
+    <div className="mx-auto max-w-md bg-white px-4 py-10 sm:py-20">
       <p className="text-center text-[9px] font-light uppercase tracking-[0.32em] text-neutral-400">INKOTANYISINCE90</p>
-      <h1 className="mt-4 text-center text-4xl font-semibold uppercase leading-tight tracking-[-0.03em]">{mode === "login" ? "Sign In" : "Create Account"}</h1>
+      <h1 className="mt-4 text-center text-3xl font-semibold uppercase leading-tight tracking-[-0.03em] sm:text-4xl">{mode === "login" ? "Sign In" : "Create Account"}</h1>
       <p className="mt-3 text-center text-sm font-light leading-7 text-neutral-500">
         {mode === "login" ? "Access your account and order history." : "Create an account to view orders linked to your email."}
       </p>
@@ -136,7 +136,7 @@ export default function AccountPage() {
           <input required type="password" minLength={6} value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} placeholder="Minimum 6 characters" className={inputClass} />
         </label>
         {error && <p className="border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">{error}</p>}
-        <button disabled={busy} className="w-full bg-black py-4 text-[11px] font-medium uppercase tracking-[0.24em] text-white transition hover:bg-neutral-800 disabled:opacity-50">
+        <button disabled={busy} className="min-h-[52px] w-full bg-black py-4 text-[11px] font-medium uppercase tracking-[0.2em] text-white transition hover:bg-neutral-800 disabled:opacity-50 sm:tracking-[0.24em]">
           {busy ? "Please wait..." : mode === "login" ? "Sign In" : "Create Account"}
         </button>
       </form>

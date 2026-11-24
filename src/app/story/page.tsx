@@ -19,7 +19,7 @@ export default async function StoryPage() {
 
   return (
     <div className="bg-white">
-      <section className="mx-auto max-w-4xl px-4 pb-14 pt-16 text-center sm:px-6">
+      <section className="mx-auto max-w-4xl px-4 pb-12 pt-10 text-center sm:px-6 sm:pb-14 sm:pt-16">
         <p className="text-[9px] font-light uppercase tracking-[0.32em] text-neutral-400">INKOTANYISINCE90</p>
         <h1 className="mt-5 text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.02] tracking-[-0.045em]">
           Minimalist luxury fashion from Rwanda.
@@ -29,7 +29,7 @@ export default async function StoryPage() {
         </p>
       </section>
 
-      <section className="mx-auto grid max-w-[1300px] gap-5 px-4 pb-20 sm:grid-cols-3 sm:px-8 lg:px-12">
+      <section className="mx-auto grid max-w-[1300px] gap-8 px-4 pb-14 sm:grid-cols-3 sm:gap-5 sm:px-8 sm:pb-20 lg:px-12">
         {[
           { src: officialImage("ink.front-removebg-preview.model.png"), label: "IS90-001 — INKOTANYI SCRIPT" },
           { src: officialImage("urugwiro.front-removebg-preview.model.png"), label: "IS90-005 — URUGWIRO" },
@@ -52,7 +52,7 @@ export default async function StoryPage() {
         ))}
       </section>
 
-      <section className="mx-auto max-w-5xl px-4 pb-20 sm:px-6">
+      <section className="mx-auto max-w-5xl px-4 pb-14 sm:px-6 sm:pb-20">
         <div className="grid gap-10 border-y border-neutral-100 py-12 md:grid-cols-3">
           {selected.slice(0, 3).map((product) => (
             <article key={product!.slug} className="text-center md:text-left">
@@ -76,7 +76,7 @@ export default async function StoryPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-4 pb-24 sm:px-8 lg:px-12">
+      <section className="mx-auto max-w-[1500px] px-4 pb-16 sm:px-8 sm:pb-24 lg:px-12">
         <div className="mb-9 text-center">
           <p className="text-[9px] font-light uppercase tracking-[0.3em] text-neutral-400">Selected</p>
           <h2 className="mt-2 text-xl font-medium uppercase tracking-[0.08em]">Products</h2>
@@ -86,7 +86,7 @@ export default async function StoryPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-xl px-4 pb-24 text-center sm:px-6">
+      <section className="mx-auto max-w-xl px-4 pb-16 text-center sm:px-6 sm:pb-24">
         <p className="text-[9px] font-light uppercase tracking-[0.32em] text-neutral-400">Newsletter</p>
         <h2 className="mt-3 text-2xl font-medium uppercase tracking-[0.06em]">Subscribe</h2>
         <div className="mt-7 text-left">
